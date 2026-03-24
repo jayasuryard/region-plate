@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { RegionTag } from '@/components/region-tag';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import React, { useState } from 'react';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BarChart } from 'react-native-chart-kit';
 
 const screenWidth = Dimensions.get('window').width;
 
