@@ -1,29 +1,59 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Regional Indian Food Tracker Theme
+ * Colors: Deep forest green + warm saffron, inspired by Indian spice markets
+ * Fonts: Fraunces for numbers/headings, DM Sans for body text
  */
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Brand colors inspired by Indian spice markets
+const forestGreen = '#1B4332';
+const forestGreenLight = '#2D6A4F';
+const saffron = '#F4A261';
+const saffronLight = '#F7B97E';
+const warmCream = '#FFF9F0';
+const deepBrown = '#5C3A21';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: deepBrown,
+    textSecondary: '#7A5838',
+    background: warmCream,
+    surface: '#FFFFFF',
+    tint: forestGreen,
+    tintSecondary: saffron,
+    icon: '#7A5838',
+    tabIconDefault: '#9B8574',
+    tabIconSelected: forestGreen,
+    border: '#E5DDD0',
+    success: '#40916C',
+    warning: saffron,
+    error: '#D64545',
+    cardBackground: '#FFFFFF',
+    progressBackground: '#E5DDD0',
+    progressFill: saffron,
+    regionTag: forestGreenLight,
+    calorieRing: saffron,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: warmCream,
+    textSecondary: '#C4B5A0',
+    background: '#0F1810',
+    surface: '#1B2820',
+    tint: '#52B788',
+    tintSecondary: saffronLight,
+    icon: '#C4B5A0',
+    tabIconDefault: '#8A7E6F',
+    tabIconSelected: '#52B788',
+    border: '#3A4A3F',
+    success: '#52B788',
+    warning: saffronLight,
+    error: '#FF6B6B',
+    cardBackground: '#1B2820',
+    progressBackground: '#3A4A3F',
+    progressFill: saffronLight,
+    regionTag: '#40916C',
+    calorieRing: saffronLight,
   },
 };
 

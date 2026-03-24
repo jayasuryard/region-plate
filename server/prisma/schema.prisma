@@ -1,0 +1,120 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  name              String?
+  primaryRegion     String   // North India, South India, etc.
+  secondaryRegions  String   // JSON array of secondary regions
+  dietPreferences   String   // JSON array - no-onion-garlic, vegetarian, vegan, etc.
+  dailyCalorieGoal  Int      @default(2000)
+  dailyProteinGoal  Int      @default(50)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  meals             Meal[]
+}
+
+model Region {
+  id                String   @id @default(uuid())
+  name              String   @unique // Punjab, Rajasthan, Tamil Nadu, Karnataka, etc.
+  category          String   // North India, South India, West India, East India, Northeast India
+  typicalIngredients String  // JSON array - wheat, dairy, rice, lentil, millet, fish, etc.
+  characteristics   String   // "Wheat, dairy heavy", "Rice, lentil based", etc.
+  
+  foods             RegionalFood[]
+}
+
+model Food {
+  id                String   @id @default(uuid())
+  name              String   // Chapati, Dosa, Paratha, etc.
+  category          String   // Bread, Rice dish, Curry, etc.
+  createdAt         DateTime @default(now())
+  
+  regionalVariants  RegionalFood[]
+  meals             Meal[]
+}
+
+model RegionalFood {
+  id                String   @id @default(uuid())
+  foodId            String
+  regionId          String
+  
+  // Nutrition per 100g
+  caloriesPer100g   Float
+  proteinPer100g    Float
+  carbsPer100g      Float
+  fatPer100g        Float
+  fiberPer100g      Float?
+  
+  // Ingredients breakdown with quantities
+  ingredients       Ingredient[]
+  
+  // Regional-specific notes
+  preparationNote   String?  // "No oil", "Ghee added", "Butter used", etc.
+  
+  food              Food     @relation(fields: [foodId], references: [id])
+  region            Region   @relation(fields: [regionId], references: [id])
+  
+  @@unique([foodId, regionId])
+}
+
+model Ingredient {
+  id                String   @id @default(uuid())
+  regionalFoodId    String
+  name              String   // Wheat flour, Ghee, Salt, etc.
+  quantity          Float    // in grams per 100g of the food
+  unit              String   @default("g")
+  
+  regionalFood      RegionalFood @relation(fields: [regionalFoodId], references: [id])
+}
+
+model Meal {
+  id                String   @id @default(uuid())
+  userId            String
+  foodId            String
+  regionalFoodId    String?  // Specific regional variant
+  
+  // Portion tracking
+  portionSize       String   // Small, Medium, Large, Custom
+  quantityGrams     Float    // Actual quantity consumed
+  
+  // Calculated nutrition for this meal
+  calories          Float
+  protein           Float
+  carbs             Float
+  fat               Float
+  
+  // Metadata
+  mealType          String?  // Breakfast, Lunch, Dinner, Snack
+  loggedAt          DateTime @default(now())
+  notes             String?
+  photoUrl          String?  // If taken via camera
+  
+  user              User     @relation(fields: [userId], references: [id])
+  food              Food     @relation(fields: [foodId], references: [id])
+}
+
+model CustomRecipe {
+  id                String   @id @default(uuid())
+  userId            String
+  name              String
+  region            String?  // Optional region association
+  
+  // Nutrition per 100g
+  caloriesPer100g   Float
+  proteinPer100g    Float
+  carbsPer100g      Float
+  fatPer100g        Float
+  
+  ingredients       String   // JSON string of ingredients
+  
+  createdAt         DateTime @default(now())
+}
